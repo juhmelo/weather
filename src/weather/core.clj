@@ -36,12 +36,3 @@
 
 (log/set-output-fn! log/default-log-output-fn)
 
-
-(comment
-  (log/set-level! :info)
-  (log/set-level! :debug)
-  ;; Starting and stopping the application during NREPL access
-  (m/start)
-  (m/stop)
-  ;; Override some environment variables
-  (cfg/reload-with-override! {"HTTP_PORT" 8888}))

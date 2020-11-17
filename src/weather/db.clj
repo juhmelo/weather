@@ -1,12 +1,5 @@
 (ns weather.db
-  (:require [cheshire.core :as json]
-            [mount.lite :as m]
-            [clojure.java.io :as io]))
-
-;; Not needed for now.
-#_(defonce cities
-  (json/parse-string (slurp (io/resource "clist.json")) keyword))
-
+  (:require [mount.lite :as m]))
 
 ;; For our purposes an atom serves fine as our db.
 (m/defstate db

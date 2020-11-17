@@ -10,7 +10,7 @@
   {:spec string?})
 
 (cfg/def FORECAST_URL "Weather service url."
-  {:spec string? ;; Could also regex to see if properly formed address.
+  {:spec string? ;; Could also regex to see if it is a properly formed address.
    :default "https://api.openweathermap.org/data/2.5/forecast"})
 
 (defn format-response [id {:keys [body]}]

@@ -37,12 +37,6 @@ user=> (reset)
 
 ## Testing
 
-With coverage report:
-
-    $ lein cloverage
-
-Same, but without coverage report:
-
     $ lein test
 
 ## License
