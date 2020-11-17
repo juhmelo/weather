@@ -4,7 +4,7 @@ Polls weather forecast data for configured cities.
 Limit temperatures (celcius) are configured for each city.
 The application implements a REST-api where it serves info on each city, 
 and if the temperature limit will be violated within the next 5 days.
-The API is documented in api.yaml
+The API is documented in `resources/api.yaml`
 
 ## Development
 
