@@ -8,6 +8,8 @@ The API is documented in api.yaml
 
 ## Development
 
+You will need to have leiningen installed https://leiningen.org/ .
+
 Configuring the application is done in `dev-env.edn`.
 Configurable variables are as follows:
 
