@@ -5,13 +5,19 @@ Limit temperatures (celcius) are configured for each city.
 The application implements a REST-api where it serves info on each city, 
 and if the temperature limit will be violated within the next 5 days.
 The API is documented in `resources/api.yaml`
-Currently two endpoints exist:
+Currently two unprotected endpoints exist:
 
 - `/api/cities`
   Get a summary of all cities and if they exceed their temperature limit.
   
 - `/api/cities/<CITY_ID>`
   Query specific city.
+  
+``` bash
+# example call to Cities endpoint
+$ curl localhost:8080/api/cities/
+{"cities":[{"id":"658225","name":"Helsinki","limit":10,"forecast_max_temp":10.36,"limit_exceeded":true}, ...], ...}
+```
 
 ## Development
 
