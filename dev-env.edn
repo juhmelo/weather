@@ -1,0 +1,10 @@
+{HTTP_PORT        8080
+ API_KEY          "YOUR API KEY HERE"
+ FORECAST_URL     "https://api.openweathermap.org/data/2.5/forecast"
+ POLL_INTERVAL_MS 10000
+ ;; Vector of maps with city `id`  and `limit` temperature in celcius
+ ;; City ids can be found in `resources/clist.json`, lookup is a manual process.
+ LOCATION_CONFIG  [{:id "658225" :limit 13.2}
+                   {:id "2960" :limit 3.7}]
+ LOG_LEVEL "DEBUG"
+ }
