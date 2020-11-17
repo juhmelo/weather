@@ -11,9 +11,9 @@
 (use-fixtures
   :each (fn [f]
           (tu/start-with-env-override '{HTTP_PORT 8080} #'server)
+          (tu/start-with-env-override '{} #'db/db)
           (f)
           (m/stop)))
-
 
 (deftest test-api
   (testing "Health endpoint returns 200"
@@ -32,7 +32,7 @@
       {:id               "123"
        :name             "A city"
        :limit            1.2
-       :forecas_max_temp 10.36
+       :forecast_max_temp 10.36
        :limit_exceeded   true}))
     (is
      (=
@@ -40,7 +40,7 @@
       {:id               "123"
        :name             "A city"
        :limit            1.2
-       :forecas_max_temp 0
+       :forecast_max_temp 0
        :limit_exceeded   false}))
     (is
      (=
@@ -48,7 +48,7 @@
       {:id               "123",
        :name             "A city"
        :limit            -1.2
-       :forecas_max_temp -10.36
+       :forecast_max_temp -10.36
        :limit_exceeded   false}))
     (is
      (=
@@ -56,7 +56,7 @@
       {:id               "123"
        :name             "A city"
        :limit            0
-       :forecas_max_temp 0
+       :forecast_max_temp 0
        :limit_exceeded   false}))
     (is
      (=
@@ -65,8 +65,8 @@
   (testing "cities-payload"
     (is
      (=
-      (with-redefs [db/db         (atom {"658225" {:max-temp 10.36 :city-name "Helsinki"},
-                                         "2960"   {:max-temp 18.71 :city-name "‘Ayn Ḩalāqīm"}})
+      (with-redefs [db/db         (atom (atom {"658225" {:max-temp 10.36 :city-name "Helsinki"},
+                                              "2960"   {:max-temp 18.71 :city-name "‘Ayn Ḩalāqīm"}}))
                     config/config (fn [] [{:id "658225" :limit 13.2} {:id "2960" :limit 3.7}])]
         (cities-payload))
       {:forecast
@@ -77,16 +77,16 @@
        [{:id "658225"
          :name "Helsinki"
          :limit 13.2
-         :forecas_max_temp 10.36
+         :forecast_max_temp 10.36
          :limit_exceeded false}
         {:id "2960"
          :name "‘Ayn Ḩalāqīm"
          :limit 3.7
-         :forecas_max_temp 18.71
+         :forecast_max_temp 18.71
          :limit_exceeded true}]}))
     (is
      (=
-      (with-redefs [db/db         (atom {})
+      (with-redefs [db/db         (atom (atom {}))
                     config/config (fn [] [{:id "658225" :limit 13.2} {:id "2960" :limit 3.7}])]
         (cities-payload))
       {:forecast {}
@@ -99,7 +99,7 @@
         {:id "2960" :name nil :limit 3.7 :message "Forecast data not available."}]}))
     (is
      (=
-      (with-redefs [db/db         (atom {})
+      (with-redefs [db/db         (atom (atom {}))
                     config/config (fn [] nil)]
         (cities-payload))
       {:forecast {}, :limits nil, :cities []}))))

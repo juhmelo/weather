@@ -33,13 +33,13 @@
       :name    city-name
       :limit   limit}
      (if max-temp
-       {:forecas_max_temp max-temp
+       {:forecast_max_temp max-temp
         :limit_exceeded         (> max-temp limit)}
        {:message "Forecast data not available."}))))
 
 (defn cities-payload []
   "Construct payload for all configured cities"
-  (let [forecasts        @db/db
+  (let [forecasts        @@db/db
         location-configs (config/config)
         cities           (for [{:keys [id] :as config} location-configs]
                            (city-payload config (get forecasts id)))]
@@ -58,7 +58,7 @@
                   (config/config)
                   (filter #(= id (:id %)))
                   first)
-        forecast (get @db/db id)]
+        forecast (get @@db/db id)]
     (if-not config
       {:status 404
        :body {:error (str "City not found with given id " id)}}

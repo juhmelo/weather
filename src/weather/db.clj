@@ -1,5 +1,6 @@
 (ns weather.db
   (:require [cheshire.core :as json]
+            [mount.lite :as m]
             [clojure.java.io :as io]))
 
 ;; Not needed for now.
@@ -8,7 +9,10 @@
 
 
 ;; For our purposes an atom serves fine as our db.
-(def db (atom {}))
+(m/defstate db
+  :start (atom {})
+  :stop nil)
 
 (defn upsert-weather-data [data]
-  (reset! db (merge @db data)))
+  (reset! @db (merge @@db data)))
+
