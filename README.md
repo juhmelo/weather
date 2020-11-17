@@ -12,18 +12,18 @@ Configuring the application is done in `dev-env.edn`.
 Configurable variables are as follows:
 
 ### Required
-`API_KEY` 
+- `API_KEY` 
     Api key needed for calls to forecast service https://openweathermap.org/. You will need to register and acquire a key.
-`LOCATION_CONFIG` 
+- `LOCATION_CONFIG` 
     Which cities to get forecasts on, and what the limit temperatures are.
     The configuration is a vector of maps, each with two keys: `id` (city id) and `limit` (limit temperature in celcius).
 
 ### Optional
-`HTTP_PORT`
+- `HTTP_PORT`
     Port for HTTP server to listen on, defaults to 8090 if blank
-`POLL_INTERVAL_MS` 
+- `POLL_INTERVAL_MS` 
     Poll interval to forecast api in milliseconds, defaults to 10000 (10sec)
-`FORECAST_URL` 
+- `FORECAST_URL` 
     Forecast api url, defaults to "https://api.openweathermap.org/data/2.5/forecast" and currently the only one that is supported.
 
 Run  the application:
