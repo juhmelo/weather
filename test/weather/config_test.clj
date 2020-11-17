@@ -1,8 +1,24 @@
 (ns weather.config-test
   (:require [weather.config :refer :all]
-            [clojure.test :refer :all]))
+            [clojure.test :refer :all]
+            [clojure.spec.alpha :as s]))
 
 (deftest test-config
+
+  (testing "spec"
+    (is
+     (not (s/valid? :weather.config/city-config {})))
+    (is
+     (not (s/valid? :weather.config/city-config {:id 1 :limit 1})))
+    (is
+     (not (s/valid? :weather.config/city-config {:id "12" :limit nil})))
+    (is
+     (s/valid? :weather.config/city-config {:id "12" :limit 0}))
+    (is
+     (s/valid? :weather.config/city-config {:id "12" :limit -1}))
+    (is
+     (s/valid? :weather.config/city-config {:id "12" :limit 1})))
+
   (testing "ids"
     (is
      (=
