@@ -1,0 +1,74 @@
+swagger: '2.0'
+
+info:
+  title: foo
+  version: '1.0'
+
+basePath: /api
+produces:
+- application/json
+consumes:
+- application/json
+
+paths:
+  /cities:
+    get:
+      operationId: weather.api/get-cities
+      responses:
+        default:
+          description: Return configured cities, including info whether they violate the temperature limit or not.
+          schema:
+            $ref: '#/definitions/Cities'
+  /cities/{id}:
+    get:
+      operationId: weather.api/get-city
+      parameters:
+      - name: id
+        in: path
+        type: string
+      responses:
+        default:
+          description: Get city data via id.
+          schema:
+            $ref: '#/definitions/City'
+        404:
+          description: City is not configured
+
+definitions:
+  Cities:
+    type: object
+    items:
+      type: object
+      properties:
+        forecast:
+          type: object
+        limits:
+          type: array
+          items:
+            type: object
+            properties:
+              # City id
+              id:
+                type: string
+              # Limit temp in celcius
+              limit:
+                type: number
+        cities:
+          type: array
+          items:
+            $ref: '#/definitions/City'
+  City:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      limit:
+        type: number
+      forecast_max_temp:
+        type: number
+      # Does the limit temp get exceeded by the forecast temp
+      limit_exceeded:
+        type: boolean  
+
